@@ -1,7 +1,7 @@
 #!/bin/bash
 # pi-app-store: 1
 # pi-app-store-category: games
-# pi-app-store-description: Offline grid snake arena with two computer rivals, growth and defeated-body food. Not slither.io, not online.
+# pi-app-store-description: Offline grid snake arena: walls wrap, your own body is safe, only other snakes can kill you, and the fallen become food. Not slither.io, not online.
 set -eu
 cd -- "$(dirname -- "$0")"
 case "${1:-}" in
