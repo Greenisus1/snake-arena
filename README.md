@@ -1,3 +1,8 @@
+## Languages
+
+Works with the Translations app: pick a language there and the HUD and help lines switch to it (English, Espanol, Francais, Deutsch). With no Translations app installed it runs in English as usual.
+
+## Run
 # snake-arena 1.1.0
 
 Offline grid snake arena with two computer rivals. Walls wrap endlessly and your own body is harmless: only another snake (a rival body, or a head-on) can kill you. Dead snakes drop their whole body as edible food dots at the exact cells where they died. Rivals respawn so the arena never runs out. Not slither.io, not online.
