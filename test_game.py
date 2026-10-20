@@ -1,3 +1,4 @@
+import os
 import unittest,random
 import game
 modules={'snake-arena':game}
@@ -28,3 +29,10 @@ class Tests(unittest.TestCase):
     for i,s in enumerate(g.snakes):
      if g.alive[i]:self.assertTrue(all(0<=x<g.w and 0<=y<g.h for x,y in s))
 if __name__=="__main__":unittest.main()
+
+
+class I18nTests(unittest.TestCase):
+    def test_defaults(self):
+        import game
+        self.assertIn("{score}", game.DEFAULT_STRINGS["HUD"])
+        self.assertEqual(game.DEFAULT_STRINGS["PAUSED"] if "PAUSED" in game.DEFAULT_STRINGS else "x", "x")
