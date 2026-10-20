@@ -1,3 +1,7 @@
+## Drift mode
+
+`./game.py --drift` (or `python3 game.py --drift`) starts Drift: a free-direction orb arena. Your snake glides instead of snapping to a grid - Left/Right or A/D steer smoothly, hold Space to boost (boost slowly burns length). Eat the glowing orbs to grow, cut rival snakes off so they burst into orbs, and stay off the border. Your own trail is safe. P pauses, R restarts, Esc/q quits.
+
 ## Languages
 
 Works with the Translations app: pick a language there and the HUD and help lines switch to it (English, Espanol, Francais, Deutsch). With no Translations app installed it runs in English as usual.
