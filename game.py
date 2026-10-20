@@ -11,7 +11,7 @@ except ImportError:
 DEFAULT_STRINGS = {'HUD': 'SNAKE ARENA  food {score} length {length} rivals {rivals}', 'RESIZE': 'Resize or R to refit (minimum 66x23).', 'GAME_OVER': 'GAME OVER. R restarts', 'RULES': 'Walls wrap. Your own body is safe. Rival bodies still bite - their remains are food.', 'CONTROLS': 'Arrows/WASD turn | Space pause | R restart | Esc/q exit'}
 from ui import put,run
 DIRS=((1,0),(-1,0),(0,1),(0,-1))
-VERSION='1.1.0'
+VERSION='1.3.0'
 RESPAWN_TICKS=40
 class Arena:
  def __init__(self,w=32,h=18,seed=0):
@@ -87,4 +87,7 @@ def loop(s):
 if __name__=='__main__':
  import sys
  if '--version' in sys.argv:print(VERSION)
+ elif '--drift' in sys.argv:
+  import drift
+  raise SystemExit(run(drift.loop))
  else:raise SystemExit(run(loop))
