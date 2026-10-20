@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 """Offline rival-snake arena. Original grid game, not an online service."""
 import curses,random,time
+
+try:
+    import pi18n
+except ImportError:
+    pi18n = None
+
+# English UI strings; the Translations app owns every language via ~/pi-translations.
+DEFAULT_STRINGS = {'HUD': 'SNAKE ARENA  food {score} length {length} rivals {rivals}', 'RESIZE': 'Resize or R to refit (minimum 66x23).', 'GAME_OVER': 'GAME OVER. R restarts', 'RULES': 'Walls wrap. Your own body is safe. Rival bodies still bite - their remains are food.', 'CONTROLS': 'Arrows/WASD turn | Space pause | R restart | Esc/q exit'}
 from ui import put,run
 DIRS=((1,0),(-1,0),(0,1),(0,-1))
 VERSION='1.1.0'
@@ -55,6 +63,7 @@ class Arena:
    else:self.snakes[i].pop()
   self.refill();return not self.alive[0]
 def loop(s):
+ S=pi18n.load('snake-arena',DEFAULT_STRINGS) if pi18n else DEFAULT_STRINGS
  s.timeout(40);h,w=s.getmaxyx();g=Arena(max(32,w//2-2),max(18,h-6));last=time.monotonic();direction=None;paused=False;done=False
  while True:
   h,w=s.getmaxyx();key=s.getch();s.erase()
@@ -65,16 +74,16 @@ def loop(s):
   if key in keys:direction=keys[key]
   fits=w>=g.w*2+2 and h>=g.h+5
   if fits and not paused and not done and time.monotonic()-last>.16:done=g.step(direction);direction=None;last=time.monotonic()
-  put(s,0,1,'SNAKE ARENA  food '+str(g.score)+' length '+str(len(g.snakes[0]))+' rivals '+str(sum(g.alive[1:])),curses.A_BOLD)
-  if not fits:put(s,2,1,'Resize or R to refit (minimum66x23).' )
+  put(s,0,1,S['HUD'].format(score=g.score,length=len(g.snakes[0]),rivals=sum(g.alive[1:])),curses.A_BOLD)
+  if not fits:put(s,2,1,S['RESIZE'])
   else:
    left=(w-g.w*2)//2;top=2+(h-g.h-5)//2
    for y in range(g.h):put(s,top+y,left,'· '*g.w)
    for x,y in g.food:put(s,top+y,left+x*2,'◇')
    for i,snake in enumerate(g.snakes):
     for j,(x,y) in enumerate(snake):put(s,top+y,left+x*2,('P' if i==0 else str(i)) if j==0 else '█',curses.A_REVERSE if i==0 else 0)
-   put(s,h-3,1,'GAME OVER. R restarts' if done else 'Walls wrap. Your own body is safe. Rival bodies still bite - their remains are food.')
-  put(s,h-1,1,'Arrows/WASD turn | Space pause | R restart | Esc/q exit');s.refresh()
+   put(s,h-3,1,S['GAME_OVER'] if done else S['RULES'])
+  put(s,h-1,1,S['CONTROLS']);s.refresh()
 if __name__=='__main__':
  import sys
  if '--version' in sys.argv:print(VERSION)
